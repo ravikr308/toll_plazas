@@ -1,0 +1,56 @@
+{
+  "info": {
+    "name": "Toll Plaza API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" }
+  ],
+  "item": [
+    {
+      "name": "Toll plazas: Bengaluru to Pune",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/v1/toll-plazas",
+        "body": { "mode": "raw", "raw": "{\n  \"sourcePincode\": \"560064\",\n  \"destinationPincode\": \"411045\"\n}" }
+      }
+    },
+    {
+      "name": "Toll plazas: Delhi to Bengaluru",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/v1/toll-plazas",
+        "body": { "mode": "raw", "raw": "{\n  \"sourcePincode\": \"110001\",\n  \"destinationPincode\": \"560001\"\n}" }
+      }
+    },
+    {
+      "name": "Error: same source and destination (400)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/v1/toll-plazas",
+        "body": { "mode": "raw", "raw": "{\n  \"sourcePincode\": \"110001\",\n  \"destinationPincode\": \"110001\"\n}" }
+      }
+    },
+    {
+      "name": "Error: invalid pincode format (400)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/v1/toll-plazas",
+        "body": { "mode": "raw", "raw": "{\n  \"sourcePincode\": \"12345\",\n  \"destinationPincode\": \"560001\"\n}" }
+      }
+    },
+    {
+      "name": "Error: missing destination (400)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/v1/toll-plazas",
+        "body": { "mode": "raw", "raw": "{\n  \"sourcePincode\": \"110001\"\n}" }
+      }
+    }
+  ]
+}

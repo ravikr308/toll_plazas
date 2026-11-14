@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: toll-plaza-api
+  datasource:
+    # In-memory by default; the CSV is re-imported on every start.
+    # For a persistent file DB use: jdbc:h2:file:./data/tollplaza;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:tollplaza;DB_CLOSE_DELAY=-1
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  cache:
+    type: caffeine
+    cache-names: tollPlazaResults,geocodes
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=24h
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+tollplaza:
+  csv:
+    path: classpath:data/toll_plaza_india.csv
+  geocoding:
+    base-url: https://nominatim.openstreetmap.org
+    user-agent: toll-plaza-api/1.0 (replace-with-your-contact-email)
+    min-interval: 1100ms
+  routing:
+    base-url: https://router.project-osrm.org
+  matching:
+    threshold-km: 0.5
+  http:
+    connect-timeout: 5s
+    read-timeout: 60s
